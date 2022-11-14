@@ -6,6 +6,8 @@ namespace IntroToBDD.Helpers.Settings
     {
         private static IConfiguration Configuration { get; } = new ConfigurationBuilder()
             .AddJsonFile("appsettings.json", false)
+            .AddEnvironmentVariables()
+            .AddJsonFile("myappsettings.secrets.json", optional: true, reloadOnChange: true)
             .Build();
         public static ContractApiSettings LoadContractApiSettings()
         {
