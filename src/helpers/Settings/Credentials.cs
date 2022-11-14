@@ -1,4 +1,4 @@
-﻿namespace IntroToBDD.Helpers
+﻿namespace IntroToBDD.Helpers.Settings
 {
     public class Credentials
     {

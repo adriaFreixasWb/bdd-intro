@@ -1,4 +1,5 @@
 using IntroToBDD.Helpers;
+using IntroToBDD.Helpers.Settings;
 using System.Net;
 
 namespace IntroToBDD.Test.StepDefinitions
@@ -8,7 +9,6 @@ namespace IntroToBDD.Test.StepDefinitions
     {
         private readonly TokenFeatureHelper tokenFeatureHelper;
         private readonly ScenarioContext context;
-        private const string url = "http://cmicts10.internal.stage.aws.dotw.com/api/verticalbooking/v1/authorize.json";
 
         public TokenFetchingSteps(ScenarioContext context)
         {
@@ -26,7 +26,7 @@ namespace IntroToBDD.Test.StepDefinitions
         public void WhenWeLogRequestANewToken()
         {
             var credentials = context.Get<Credentials>(nameof(Credentials));
-            var response = tokenFeatureHelper.Login(url, credentials.User, credentials.Password);
+            var response = tokenFeatureHelper.Login(ContractApiSettings.Current.Url, credentials.User, credentials.Password);
             context.Add(nameof(HttpResponseMessage), response);
         }
 
