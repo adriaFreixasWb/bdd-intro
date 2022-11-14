@@ -6,14 +6,15 @@ namespace IntroToBDD.Test.StepDefinitions
     [Binding]
     public class TokenFetchingSteps
     {
-        private readonly TokenFeatureHelper tokenFeatureHelper; 
+        private readonly TokenFeatureHelper tokenFeatureHelper;
+        private readonly ScenarioContext context;
         private const string url = "http://cmicts10.internal.stage.aws.dotw.com/api/verticalbooking/v1/authorize.json";
         private string user;
         private string password;
-        private HttpResponseMessage response;
-        public TokenFetchingSteps()
+        public TokenFetchingSteps(ScenarioContext context)
         {
             tokenFeatureHelper= new TokenFeatureHelper();
+            this.context = context;
         }
 
         [Given(@"That we have a wrong user and a password")]
@@ -26,12 +27,15 @@ namespace IntroToBDD.Test.StepDefinitions
         [When(@"We log request a new token")]
         public void WhenWeLogRequestANewToken()
         {
-            response = tokenFeatureHelper.Login(url, user, password);
+            
+            var response = tokenFeatureHelper.Login(url, user, password);
+            context.Add(nameof(HttpResponseMessage), response);
         }
 
         [Then(@"We should get unauthorized")]
         public void ThenWeShouldGetUnauthorized()
         {
+            var response = context.Get<HttpResponseMessage>(nameof(HttpResponseMessage));
             response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
         }
     }
