@@ -2,7 +2,7 @@
 using System.Text;
 using System.Text.Json;
 
-namespace IntroToBDD.Helpers
+namespace IntroToBDD.Helpers.TokenFetching
 {
     public class TokenFeatureHelper
     {
@@ -35,7 +35,7 @@ namespace IntroToBDD.Helpers
         private void AddRequestTokenBoyd(HttpRequestMessage request) =>
             request.Content = new StringContent(SerilizeRequestTokenBody(), ContentEncoding, MediaType);
 
-        public string SerilizeRequestTokenBody()=>
-            JsonSerializer.Serialize(new { request = new { type = TOKEN_REQUEST_TYPE} });
+        public string SerilizeRequestTokenBody() =>
+            JsonSerializer.Serialize(new { request = new { type = TOKEN_REQUEST_TYPE } });
     }
 }
