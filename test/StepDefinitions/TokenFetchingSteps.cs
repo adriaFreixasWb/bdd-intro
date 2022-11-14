@@ -9,8 +9,7 @@ namespace IntroToBDD.Test.StepDefinitions
         private readonly TokenFeatureHelper tokenFeatureHelper;
         private readonly ScenarioContext context;
         private const string url = "http://cmicts10.internal.stage.aws.dotw.com/api/verticalbooking/v1/authorize.json";
-        private string user;
-        private string password;
+
         public TokenFetchingSteps(ScenarioContext context)
         {
             tokenFeatureHelper= new TokenFeatureHelper();
@@ -20,15 +19,14 @@ namespace IntroToBDD.Test.StepDefinitions
         [Given(@"That we have a wrong user and a password")]
         public void GivenThatWeHaveAWrongUserAndAPassword()
         {
-            user = "user";
-            password = "password";
+            context.Add(nameof(Credentials), new Credentials("user", "password"));
         }
 
         [When(@"We log request a new token")]
         public void WhenWeLogRequestANewToken()
         {
-            
-            var response = tokenFeatureHelper.Login(url, user, password);
+            var credentials = context.Get<Credentials>(nameof(Credentials));
+            var response = tokenFeatureHelper.Login(url, credentials.User, credentials.Password);
             context.Add(nameof(HttpResponseMessage), response);
         }
 
