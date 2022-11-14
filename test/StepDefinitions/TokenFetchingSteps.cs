@@ -26,7 +26,7 @@ namespace IntroToBDD.Test.StepDefinitions
         public void WhenWeLogRequestANewToken()
         {
             var credentials = context.Get<Credentials>(nameof(Credentials));
-            var response = tokenFeatureHelper.Login(ContractApiSettings.Current.Url, credentials.User, credentials.Password);
+            var response = tokenFeatureHelper.Login(ContractApiSettings.Current.Url, credentials.Username, credentials.Password);
             context.Add(nameof(HttpResponseMessage), response);
         }
 
@@ -36,5 +36,19 @@ namespace IntroToBDD.Test.StepDefinitions
             var response = context.Get<HttpResponseMessage>(nameof(HttpResponseMessage));
             response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
         }
+
+        [Given(@"That we have correct credentials")]
+        public void GivenThatWeHaveCorrectCredentials()
+        {
+            context.Add(nameof(Credentials), ContractApiSettings.Current.Credentials);
+        }
+
+        [Then(@"We should get success")]
+        public void ThenWeShouldGetSuccess()
+        {
+            var response = context.Get<HttpResponseMessage>(nameof(HttpResponseMessage));
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+        }
+
     }
 }

@@ -2,11 +2,15 @@
 {
     public class Credentials
     {
-        public string User { get; }
-        public string Password { get; }
+        public string Username { get; set; }
+        public string Password { get; set; }
+        public Credentials()
+        {
+
+        }
         public Credentials(string user, string password)
         {
-            User = user;
+            Username = user;
             Password = password;
         }
     }
